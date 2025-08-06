@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photoshoot Category</title>
+    <style>
+        /* --- General Styling (Copied from index.html for consistency) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e0f2f7; /* Light blue-green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 448px;
+            background-color: #e0f2f7;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            font-size: 0.875rem;
+            color: #4a5568;
+            margin-bottom: 16px;
+        }
+        .header a img {
+            height: 24px;
+            width: 24px;
+            object-fit: contain;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .header-left-group {
+            display: flex;
+            align-items: center;
+            align-items: flex-start;
+        }
+        .header-left-group .page-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+        .header-left-group .page-subtitle {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* --- Instagram UI Specific Styling --- */
+        .instagram-feed {
+            background-color: #d4edda; /* Light green background, matching other sections */
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .instagram-post {
+            background-color: #f0f0f0; /* Lighter background for each post */
+            border-radius: 12px;
+            margin-bottom: 24px; /* Space between posts */
+            overflow: hidden; /* Ensures rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: relative; /* Crucial for positioning arrows relative to the post */
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0; /* Subtle separator */
+        }
+        .post-header .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .post-header .username {
+            font-weight: bold;
+            color: #2d3748;
+            flex-grow: 1; /* Pushes options to the right */
+        }
+        .post-header .options-icon {
+            width: 20px;
+            height: 20px;
+            stroke: #718096;
+            stroke-width: 2;
+            cursor: pointer;
+        }
+
+        .image-carousel-container {
+            width: 100%;
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            display: flex; /* Arrange images in a row */
+            scroll-snap-type: x mandatory; /* Snap to each image */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            position: relative; /* For pagination dots positioning */
+            min-width: 0; /* Crucial for flex items in a scroll container */
+            white-space: nowrap; /* Ensures images stay in one line */
+            touch-action: pan-y; /* Allows horizontal pan, prevents vertical scroll interference */
+            height: 500px; /* Set height here for carousel content area */
+        }
+
+        .image-carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for a cleaner look */
+        }
+
+        .image-carousel-container img {
+            flex-shrink: 0; /* Prevent images from shrinking */
+            width: 100%; /* Each image takes full width of the container */
+            height: 100%; /* Fill the height of the carousel container */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            scroll-snap-align: start; /* Snap to the start of each image */
+            cursor: grab; /* Indicate that the image is draggable/swipeable */
+        }
+
+        /* Carousel Navigation Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: calc(12px + 36px + 12px + 150px);
+            top: 50%; /* Center vertically within the .instagram-post */
+            transform: translateY(-50%);
+            background-color: black; /* Changed for testing visibility */
+            color: white; /* Ensure arrow itself is visible */
+            border: none;
+            border-radius: 50%; /* Circular buttons */
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 99; /* Increased z-index for testing */
+            transition: background-color 0.3s ease;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .carousel-arrow.left-arrow {
+            left: 10px;
+        }
+
+        .carousel-arrow.right-arrow {
+            right: 10px;
+        }
+
+        .carousel-arrow:disabled {
+            cursor: not-allowed;
+            background-color: rgba(0, 0, 0, 0.3); /* Slightly lighter background when disabled */
+        }
+
+        .pagination-dots {
+            position: absolute;
+            bottom: 10px; /* Position relative to .instagram-post */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10; /* Ensure dots are above image */
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+        }
+        .post-actions .left-icons,
+        .post-actions .right-icon {
+            display: flex;
+            gap: 16px; /* Space between icons */
+        }
+        .post-actions svg {
+            width: 24px;
+            height: 24px;
+            stroke: #4a5568; /* Icon color */
+            stroke-width: 2;
+            cursor: default;
+        }
+
+        .post-likes-caption {
+            padding: 0 12px 12px; /* Padding only on left, right, bottom */
+            color: #2d3748;
+        }
+        .post-likes {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .post-caption {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .post-caption .username {
+            font-weight: bold;
+            margin-right: 4px;
+        }
+
+        /* --- Image Lightbox (Modal) Styling --- */
+        .image-lightbox {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place even when scrolling */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox-content {
+            max-width: 90%; /* Max width of the image */
+            max-height: 90%; /* Max height of the image */
+            object-fit: contain; /* Ensures the image fits within the modal without cropping */
+            border-radius: 8px; /* Slightly rounded corners for the image */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Lightbox Navigation Arrows */
+        .lightbox-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px; /* Larger for lightbox */
+            height: 50px; /* Larger for lightbox */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px; /* Larger icon */
+            cursor: pointer;
+            z-index: 101; /* Above lightbox content */
+            transition: background-color 0.3s ease;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .lightbox-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .lightbox-arrow.left-arrow {
+            left: 20px;
+        }
+
+        .lightbox-arrow.right-arrow {
+            right: 20px;
+        }
+
+        .lightbox-arrow:disabled {
+            opacity: 0.5; /* Slightly faded when disabled */
+            cursor: not-allowed;
+            background-color: rgba(255, 255, 255, 0.1); /* Even lighter when disabled */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="header-left-group">
+                <a href="/Photoshoot.html" aria-label="Back to Albums">
+                    <img src="/Assets/Back.svg" alt="Back">
+                </a>
+                <div>
+                    <div class="page-title">Wish It Were You</div>
+                    <br>
+                    <div class="page-subtitle">
+                        'Wish It Were You' comes from the feeling of longing that comes from a long distance relationship. <br>
+                        <br>
+                        I had never felt any type of strong interest towards anyone until my boyfriend, Nate. I have cared for others but at the end of the day,
+                        I felt okay if they were to leave. I wouldn't fight too hard for most people in my life. <br>
+                        <br>
+                        Nate inspires me in a way I have never been before. I find myself doing things I wouldn't usually do just to be the best version of myself for him.
+                        In fact, I wouldn't have started working on this website without him. I want to push myself to work on more projects in hopes to
+                        grow my skills in web design & programming so I can open up more oppoturnities for myself. <br>
+                        <br>
+                        'Wish It Were You' is the feeling of longing I feel sometimes. Other couples have the luxury of spending time together physically.
+                        We don't have that. I hug my Ikea Djungleskog sometimes, imagining that it's him. <br>
+                        <br>
+                        I like to think that I appreciate him more because of the distance. I swore to myself that I will never take him for granted.
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instagram-like Feed Section -->
+        <div class="instagram-feed">
+        
+        <!-- Vertical Posts -->
+            <div class="instagram-post">
+                <div class="post-header">
+                    <img src="/Assets/pfp.jpg" alt="User Avatar" class="user-avatar">
+                    <span class="username">@nadh_bside</span>
+                    <svg class="options-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                    </svg>
+                </div>
+
+                <!-- Image Carousel and Arrows Container -->
+                <div class="image-carousel-wrapper">
+                    <div class="image-carousel-container" data-post-id="post1">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03172.jpg" alt="1">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03140.jpg" alt="2">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03130.jpg" alt="3">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/B612_20250622_223818_675.jpg" alt="4">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/B612_20250623_201333_524.jpg" alt="5">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03126.jpg" alt="6">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03144.jpg" alt="7">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03167.jpg" alt="8">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/DSC03181-Enhanced-NR.jpg" alt="9">
+                        <img src="/Assets/Photoshoot-Images/Djungleskog/IMG_0018.jpg" alt="10">
+                    </div>
+
+                    <!-- Navigation Arrows-->
+                    <button class="carousel-arrow left-arrow" data-direction="left" data-target-post="post1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="carousel-arrow right-arrow" data-direction="right" data-target-post="post1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="post-actions">
+                    <div class="left-icons">
+                        <!-- Like Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        <!-- Comment Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                        <!-- Share Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                    </div>
+
+                    <div class="right-icon">
+                        <!-- Save Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="post-likes-caption">
+                    <div class="post-likes">Liked by biebiebobie and others</div>
+                    <div class="post-caption"><span class="username">@nadh_bside</span> Doesn't mean your life is over. I'll always be around.</div>
+                </div>
+            </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="imageLightbox" class="image-lightbox">
+        <span class="close-button">&times;</span>
+        <img class="lightbox-content" id="lightboxImage" src="" alt="Full size image">
+
+        <!-- Lightbox Navigation Arrows -->
+        <button class="lightbox-arrow left-arrow" id="lightboxLeftArrow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button class="lightbox-arrow right-arrow" id="lightboxRightArrow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Carousel Pagination Logic ---
+            const carousels = document.querySelectorAll('.image-carousel-container');
+
+            // Global variables for lightbox
+            let currentLightboxImages = [];
+            let currentLightboxIndex = 0;
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const closeButton = document.querySelector('.close-button');
+            const lightboxLeftArrow = document.getElementById('lightboxLeftArrow');
+            const lightboxRightArrow = document.getElementById('lightboxRightArrow');
+
+
+            const updateArrows = (currentIndex, imagesLength, leftArrow, rightArrow) => {
+                if (imagesLength <= 1) {
+                    leftArrow.style.display = 'none'; // Hide if only one image
+                    rightArrow.style.display = 'none'; // Hide if only one image
+                    return;
+                }
+                leftArrow.style.display = 'flex'; // Ensure they are displayed
+                rightArrow.style.display = 'flex'; // Ensure they are displayed
+
+                leftArrow.disabled = (currentIndex === 0);
+                rightArrow.disabled = (currentIndex === imagesLength - 1);
+            };
+
+            carousels.forEach(carousel => {
+                const postId = carousel.dataset.postId;
+                const dotsContainer = document.querySelector(`.pagination-dots[data-post-id="${postId}-dots"]`);
+                const images = Array.from(carousel.querySelectorAll('img')); // Convert NodeList to Array
+                const carouselWrapper = carousel.closest('.image-carousel-wrapper');
+                const leftArrow = carouselWrapper.querySelector('.left-arrow');
+                const rightArrow = carouselWrapper.querySelector('.right-arrow');
+
+                // Variables for click vs. drag detection
+                let isDragging = false;
+                let startX;
+                let startY;
+                const clickThreshold = 5; // Pixels to distinguish click from drag
+
+                const updateCarouselDots = () => {
+                    if (!dotsContainer) return;
+
+                    const scrollLeft = carousel.scrollLeft;
+                    const imageWidth = carousel.clientWidth;
+                    if (imageWidth === 0) return;
+                    const currentIndex = Math.round(scrollLeft / imageWidth);
+
+                    dotsContainer.querySelectorAll('.dot').forEach((dot, index) => {
+                        if (index === currentIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                    updateArrows(currentIndex, images.length, leftArrow, rightArrow); // Pass images.length
+                };
+
+                if (dotsContainer && images.length > 0) {
+                    dotsContainer.innerHTML = '';
+                    images.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.classList.add('dot');
+                        if (index === 0) {
+                            dot.classList.add('active');
+                        }
+                        dotsContainer.appendChild(dot);
+                    });
+                }
+
+                // Attach event listeners for carousel
+                carousel.addEventListener('scroll', updateCarouselDots);
+
+                // Arrow click listeners for carousel
+                leftArrow.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent lightbox from opening
+                    const imageWidth = carousel.clientWidth;
+                    carousel.scrollBy({
+                        left: -imageWidth,
+                        behavior: 'smooth'
+                    });
+                });
+
+                rightArrow.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent lightbox from opening
+                    const imageWidth = carousel.clientWidth;
+                    carousel.scrollBy({
+                        left: imageWidth,
+                        behavior: 'smooth'
+                    });
+                });
+
+                window.addEventListener('resize', () => {
+                    const imageWidth = carousel.clientWidth;
+                    if (imageWidth > 0) {
+                        const currentScrollLeft = carousel.scrollLeft;
+                        const nearestImageIndex = Math.round(currentScrollLeft / imageWidth);
+                        carousel.scrollTo({
+                            left: nearestImageIndex * imageWidth,
+                            behavior: 'smooth'
+                        });
+                    }
+                    updateCarouselDots();
+                });
+
+                updateCarouselDots(); // Initial update for carousel
+
+                // --- Lightbox Click vs. Drag Logic for Images ---
+                images.forEach((img, index) => {
+                    img.addEventListener('mousedown', (e) => {
+                        isDragging = false;
+                        startX = e.clientX;
+                        startY = e.clientY;
+                    });
+
+                    img.addEventListener('mousemove', (e) => {
+                        if (startX === undefined || startY === undefined) return;
+                        const dx = Math.abs(e.clientX - startX);
+                        const dy = Math.abs(e.clientY - startY);
+                        if (dx > clickThreshold || dy > clickThreshold) {
+                            isDragging = true;
+                        }
+                    });
+
+                    img.addEventListener('mouseup', function(e) {
+                        if (!isDragging) {
+                            // Set global lightbox state
+                            currentLightboxImages = images.map(image => image.src);
+                            currentLightboxIndex = index;
+                            
+                            lightbox.style.display = 'flex';
+                            lightboxImage.src = this.src;
+                            updateLightboxArrows(); // Update lightbox arrows on open
+                        }
+                        isDragging = false;
+                        startX = undefined;
+                        startY = undefined;
+                    });
+
+                    img.addEventListener('touchstart', (e) => {
+                        isDragging = false;
+                        startX = e.touches[0].clientX;
+                        startY = e.touches[0].clientY;
+                    });
+
+                    img.addEventListener('touchmove', (e) => {
+                        if (startX === undefined || startY === undefined) return;
+                        const dx = Math.abs(e.touches[0].clientX - startX);
+                        const dy = Math.abs(e.touches[0].clientY - startY);
+                        if (dx > clickThreshold || dy > clickThreshold) {
+                            isDragging = true;
+                        }
+                    });
+
+                    img.addEventListener('touchend', function(e) {
+                        if (!isDragging) {
+                            // Set global lightbox state
+                            currentLightboxImages = images.map(image => image.src);
+                            currentLightboxIndex = index;
+
+                            lightbox.style.display = 'flex';
+                            lightboxImage.src = this.src;
+                            updateLightboxArrows(); // Update lightbox arrows on open
+                        }
+                        isDragging = false;
+                        startX = undefined;
+                        startY = undefined;
+                    });
+                });
+            });
+
+            // --- Image Lightbox Global Logic ---
+            const showLightboxImage = () => {
+                if (currentLightboxImages.length > 0) {
+                    lightboxImage.src = currentLightboxImages[currentLightboxIndex];
+                    updateLightboxArrows();
+                }
+            };
+
+            const updateLightboxArrows = () => {
+                updateArrows(currentLightboxIndex, currentLightboxImages.length, lightboxLeftArrow, lightboxRightArrow);
+            };
+
+            lightboxLeftArrow.addEventListener('click', () => {
+                if (currentLightboxIndex > 0) {
+                    currentLightboxIndex--;
+                    showLightboxImage();
+                }
+            });
+
+            lightboxRightArrow.addEventListener('click', () => {
+                if (currentLightboxIndex < currentLightboxImages.length - 1) {
+                    currentLightboxIndex++;
+                    showLightboxImage();
+                }
+            });
+
+            closeButton.addEventListener('click', function() {
+                lightbox.style.display = 'none';
+            });
+
+            lightbox.addEventListener('click', function(event) {
+                if (event.target === lightbox) {
+                    lightbox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

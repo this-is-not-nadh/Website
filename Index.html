@@ -1,0 +1,79 @@
+<!DOCTYPE html> <!-- Rename page to index ok? -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ari Home Screen</title>
+    <link rel="stylesheet" href="Landing-css.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Top Bar -->
+        <div class="header">
+            <div>ARI | pissant</div>
+            <!-- Right side icons (Wi-Fi and Battery) -->
+            <div class="header-icons">
+                <!-- Wi-Fi icon using SVG -->
+                <img src="/Assets/wifi.png" alt="Wifi Icon">
+                <!-- Battery -->
+                <img src="/Assets/battery.png" alt="Battery Icon">
+            </div>
+        </div>
+
+        <!-- Date and Time-->
+        <div class="datetime-section">
+            <div class="date">14 July 2003</div>
+            <div class="time">11:11</div>
+        </div>
+
+        <!-- Bio -->
+        <a href="About.html" class="chat-message-link"> <!-- The <a> tag now wraps the entire message content -->
+            <div class="chat-message-content"> <!-- Renamed from .chat-message -->
+                <img src="Assets\pfp.jpg" alt="Nadh Avatar" class="avatar">
+                <div>
+                    <div class="sender-name">Nadh</div>
+                    <div class="message-text">
+                        Hey. I'm surprised you showed up. <br>
+                        Why don't you click here to learn more about me? 
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Photoshoots -->
+        <!-- New Notification Section -->
+        <a href="Photoshoot.html" class="notification-section"> <!-- Ensure this <a> tag is the primary clickable wrapper -->
+            <div class="notification-header">
+                <div class="app-info">
+                    <!-- Placeholder for Photos app icon -->
+                    <img src="https://placehold.co/24x24/f0f0f0/000000?text=P" alt="Photos App Icon" class="app-icon">
+                    <span class="app-name">PHOTOS</span>
+                </div>
+                <span class="time-ago">30m ago</span>
+            </div>
+
+            <div class="notification-content">
+                <div class="notification-text">
+                    <div class="notification-message">On this day...</div>
+                    <div class="notification-subtitle">Photoshoots</div>
+                </div>
+                <!-- Placeholder for memory preview image -->
+                <img src="https://placehold.co/60x60/295d6b/ffffff?text=Memory" alt="Memory Preview" class="notification-preview-image">
+            </div>
+        </a>
+
+        <!-- Socials Bottom Bar -->
+        <div class="socials-bar">
+            <a href="https://twitter.com/AHITSPISSANT" target="_blank" aria-label="Twitter">
+                <img src="/Assets/twitter-icon.png">
+            </a>
+            <a href="https://instagram.com/nadh_bside" target="_blank" aria-label="Instagram">
+                <img src="/Assets/ig-icon.png">
+            </a>
+        </div>
+
+    </div>
+</body>
+</html>
+</html>
