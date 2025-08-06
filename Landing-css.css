@@ -1,0 +1,185 @@
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif; /* Simple default font */
+            background-color: #c6e1e9; /* Light blue-green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            padding: 16px; /* Padding around the main container */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        /* Main Container Styling */
+        .main-container {
+            width: 100%;
+            max-width: 448px; 
+            background-color: #e0f2f7;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+            overflow: hidden;
+        }
+
+        /* Section Styling */
+        .section-box {
+            background-color: #b1cad6;
+            padding: 16px;
+            border-radius: 12px; 
+            margin: 16px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            font-size: 0.875rem; 
+            color: #55867a; 
+        }
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+        }
+        .header-icons img {
+            height: 16px; /* Adjusted size for visibility */
+            width: 16px; /* Adjusted size for visibility */
+            object-fit: contain;
+        }
+
+        /* Date and Time Section */
+        .datetime-section {
+            text-align: center;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+        .datetime-section .date {
+            font-size: 0.875rem;
+            color: #718096; 
+        }
+        .datetime-section .time {
+            font-size: 3rem; 
+            font-weight: bold;
+            color: #212938; 
+            margin-top: 8px; 
+        }
+
+        /* Chat Message */
+        .chat-message-link { /* New class for the clickable link container */
+            display: block; /* Make the whole area clickable */
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Inherit text color */
+            cursor: pointer; /* Indicate it's clickable */
+        }
+
+        .chat-message-content { /* New class for the actual content div */
+            display: flex;
+            align-items: flex-start;
+            background-color: #b1cad6; /* Apply background here */
+            padding: 16px; /* Apply padding here */
+            border-radius: 12px;
+            margin: 16px; /* Apply margin here */
+        }
+
+        .chat-message-content .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%; 
+            margin-right: 12px; 
+        }
+        .chat-message-content .sender-name {
+            font-weight: 600; 
+            font-size: 1rem;
+            color: rgb(36, 41, 58); 
+        }
+        .chat-message-content .message-text {
+            color: rgba(48, 49, 58, 0.897);
+            font-family: Helvetica;
+            margin-top: 4px; 
+        }
+
+        /* Photoshoot Section */
+        .notification-section {
+            background-color: #b1cad6;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px;
+            color: rgb(36, 41, 58);
+            text-decoration: none;
+            display: block; 
+            cursor: pointer; 
+        }
+        .notification-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .notification-header .app-info {
+            display: flex;
+            align-items: center;
+        }
+        .notification-header .app-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        .notification-header .app-name {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .notification-header .time-ago {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .notification-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .notification-text {
+            flex-grow: 1;
+            margin-right: 16px;
+        }
+        .notification-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .notification-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        .notification-preview-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Socials Section*/
+        .socials-bar {
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .socials-bar a {
+            text-decoration: none;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
+
+        .socials-bar img {
+            height: 24px; 
+            width: 24px;
+            object-fit: contain; 
+        }
