@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- Header -->
         <div class="header">
             <div class="header-left">
                 <a href="index.html" aria-label="Back to Home">
@@ -18,13 +17,11 @@
             </div>
         </div>
 
-        <!-- Profile Section -->
         <div class="profile-section">
             <img src="/Assets/banner.jpg" alt="Profile Banner" class="profile-banner">
 
             <div class="profile-info">
                 <img src="/Assets/pfp.jpg" alt="Profile Avatar" class="profile-avatar">
-
                 <div class="user-details">
                     <div class="username">
                         Nadhrahtul Khairulmuzamil
@@ -38,7 +35,6 @@
                     <div class="bio-text">
                         pick my brain
                     </div>
-
                     <div class="follow-stats">
                         <span>22 <span class="label">years old</span></span>
                         <span>99 <span class="label">problems</span></span>
@@ -46,30 +42,101 @@
                 </div>
             </div>
 
-            <!-- Navigation Tabs -->
             <div class="profile-tabs">
-                <button class="active">General Bio</button>
-                <button>Likes</button>
-                <button data-tab>Contact</button>
+                <button class="tab-button active" data-tab-target="#general-bio">General Bio</button>
+                <button class="tab-button" data-tab-target="#likes">Likes</button>
+                <button class="tab-button" data-tab-target="#contact">Contact</button>
             </div>
 
-            <!-- Placeholder Content for Tabs -->
-            <div class="tab-content">
-                <div class="pinned-post">
-                    <div class="pinned-post-header">
-                        <img src="/Assets/pfp.jpg" alt="Nadh Avatar" class="avatar">
-                        <div class="username">nadh | ari</div>
-                        <div class="handle">@pissant</div>
+            <div class="tab-content-container">
+                <div id="general-bio" data-tab-content class="active">
+                    <div class="pinned-post">
+                        <div class="pinned-post-header">
+                            <img src="/Assets/pfp.jpg" alt="Nadh Avatar" class="avatar">
+                            <div class="username">nadh | ari</div>
+                            <div class="handle">@pissant</div>
+                        </div>
+                        <div class="pinned-post-text">
+                            I'm Nadh. Some people call me Ari. I like to do artsy stuff like illustrations
+                            and photoshoots. Sometimes, I code stuff sometimes. I made this website as a mini project to
+                            get better at web programming (and pad out my resume ngl).
+                        </div>
+                    </div>
+                </div>
+
+                <div id="likes" data-tab-content>
+                    <div class="pinned-post">
+                        <div class="pinned-post-header">
+                            <img src="https://placehold.co/60x60/295d6b/ffffff?text=B" alt="Bobie Avatar" class="avatar">
+                            <div class="username">Bobie</div>
+                            <div class="handle">@oii.najwa</div>
+                        </div>
+                        <div class="pinned-post-text">
+                        <p class="likes-header">Interests</p>
+                        <ul>
+                            <li>Graphic design & art</li>
+                            <li>Fighting games</li>
+                            <li>Cosplaying</li>
+                            <li>Fashion</li>
+                            <li>Formula One</li>
+                        </ul>
+                        </div>
                     </div>
 
-                    <div class="pinned-post-text">
-                        I'm Nadh. Some people call me Ari. I like to do artsy stuff like illustrations
-                        and photoshoots. Sometimes, I code stuff sometimes. I made this website as a mini project to
-                        get better at web programming (and pad out my resume ngl).
+                    <br>
+
+                    <div class="pinned-post">
+                        <div class="pinned-post-header">
+                            <img src="/Assets/cooler.jpg" alt="Nate Avatar" class="avatar">
+                            <div class="username">nate</div>
+                            <div class="handle">@dnnr.by.urslf</div>
+                        </div>
+                        <div class="pinned-post-text">
+                        <p class="likes-header">Movies</p>
+                        <p style="margin-left: 10px;">You should totally watch these. I've linked them for you because I'm such a nice person.</p>
+                        <ul>
+                            <li><a href="https://letterboxd.com/film/diary-of-a-wimpy-kid-rodrick-rules/" class="contact-links">Diary of a Wimpy Kid: Rodrick Rules</a></li>
+                            <li><a href="https://letterboxd.com/film/warm-bodies/" class="contact-links">Warm Bodies</a></li>
+                            <li><a href="https://letterboxd.com/film/renfield/" class="contact-links">Renfield</a></li>
+                            <li><a href="https://letterboxd.com/film/humanist-vampire-seeking-consenting-suicidal-person/" class="contact-links">Humanist Vampire Seeking Consenting Suicidal Person</a></li>
+                        </ul>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="pinned-post">
+                        <div class="pinned-post-header">
+                            <img src="/Assets/jonojesus.png" alt="Jono Avatar" class="avatar">
+                            <div class="username">jono</div>
+                            <div class="handle">@aonicchi</div>
+                        </div>
+                        <div class="pinned-post-text">
+                            <div class="likes-header" style="margin-bottom: 10px;">Music</div>
+                            <div id="song-cards-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact" data-tab-content>
+                    <div class="pinned-post">
+                        <div class="pinned-post-header">
+                            <img src="/Assets/pfp.jpg" alt="Nadh Avatar" class="avatar">
+                            <div class="username">nadh | ari</div>
+                            <div class="handle">@pissant</div>
+                        </div>
+                        <div class="pinned-post-text">
+                        <p>You can check out my work or reach out to me in a professional manner through these links:</p>
+                        <ul>
+                            <li class="contact-details">Email: <a href="mailto:nadhrahtulkhairulmuzamil@gmail.com" class="contact-links">nadhrahtulkhairulmuzamil@gmail.com</a></li>
+                            <li class="contact-details">GitHub: <a href="https://github.com/this-is-not-nadh" class="contact-links">github.com/nadh</a></li>
+                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="About-js.js"></script>
 </body>
 </html>

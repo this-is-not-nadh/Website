@@ -1,14 +1,14 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif; /* Simple default font */
-            background-color: #c6e1e9; /* Light blue-green background */
+            font-family: Arial, sans-serif; 
+            background-color: #c6e1e9; 
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Full viewport height */
-            padding: 16px; /* Padding around the main container */
-            box-sizing: border-box; /* Include padding in element's total width and height */
+            min-height: 100vh; 
+            padding: 16px; 
+            box-sizing: border-box; 
         }
 
         /* Main Container Styling */
